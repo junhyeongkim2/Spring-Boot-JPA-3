@@ -21,6 +21,7 @@ public class MemberJpaRepository {
         return member;
     }
 
+
     public void delete(Member member){
         em.remove(member);
     }
