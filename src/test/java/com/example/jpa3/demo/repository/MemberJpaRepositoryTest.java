@@ -43,9 +43,11 @@ class MemberJpaRepositoryTest {
 
         Member findMember1 = memberJpaRepository.findById(member1.getId()).get();
         Member findMember2 = memberJpaRepository.findById(member2.getId()).get();
-
         assertThat(findMember1).isEqualTo(member1);
         assertThat(findMember2).isEqualTo(member2);
+
+
+
 
         List<Member> all = memberJpaRepository.findAll();
         assertThat(all.size()).isEqualTo(2);
@@ -58,9 +60,6 @@ class MemberJpaRepositoryTest {
 
         long deletedCount = memberJpaRepository.count();
         assertThat(deletedCount).isEqualTo(0);
-
-
-
 
     }
 }
