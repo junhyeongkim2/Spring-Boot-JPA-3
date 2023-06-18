@@ -1,8 +1,8 @@
 package com.example.jpa3.demo.repository;
 
 
+import com.example.jpa3.demo.dto.MemberDto;
 import com.example.jpa3.demo.entity.Member;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +13,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -91,9 +90,10 @@ public class MemberRepositoryTest {
         //when
         Page<Member> page = memberRepository.findByAge(age,pageRequest);
 
+        Page<MemberDto> toMap = page.map(m -> new MemberDto(m.getId(), m.getUsername(), null));
+
         //then
         List<Member> content = page.getContent();
-        long totalElements = page.getTotalElements();
 
         assertThat(content.size()).isEqualTo(3);
         assertThat(page.getTotalElements()).isEqualTo(6);
@@ -104,9 +104,5 @@ public class MemberRepositoryTest {
 
 
     }
-
-
-
-
 
 }

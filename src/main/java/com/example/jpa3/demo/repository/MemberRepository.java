@@ -15,6 +15,9 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     List<Member> findByUsername(@Param("username") String username);
 
 
+
+    @Query(value=  "select m from Member m left join m.team t",
+            countQuery = "select count(m.username) from Member m")
     Page<Member> findByAge(int age, PageRequest pageRequest);
 
 
