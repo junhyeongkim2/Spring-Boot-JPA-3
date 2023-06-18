@@ -131,7 +131,7 @@ public class MemberRepositoryTest {
         em.clear();
 
         //when
-        List<Member> members = memberRepository.findMemberFetchJoin();
+        List<Member> members = memberRepository.findAll();
 
 
 
