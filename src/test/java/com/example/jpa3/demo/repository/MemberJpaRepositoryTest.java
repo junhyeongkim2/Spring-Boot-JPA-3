@@ -15,10 +15,10 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
 class MemberJpaRepositoryTest {
 
     @Autowired MemberJpaRepository memberJpaRepository;
+
 
     @Test
     public void testMember(){
@@ -64,12 +64,16 @@ class MemberJpaRepositoryTest {
 
     @Test
     public void testNamedQuery(){
+
         Member m1 = new Member("AAA",10);
         Member m2 = new Member("BBB",20);
         memberJpaRepository.save(m1);
         memberJpaRepository.save(m2);
 
         List<Member> result = memberJpaRepository.findByUsername("AAA");
+
+        System.out.println("test print " + result);
+
         Member findMember = result.get(0);
         assertThat(findMember).isEqualTo(m1);
     }
@@ -97,4 +101,27 @@ class MemberJpaRepositoryTest {
         assertThat(totalCount).isEqualTo(5);
 
     }
+
+    @Test
+    public void bulkUpdate(){
+
+        //given
+        memberJpaRepository.save(new Member("member2",19));
+        memberJpaRepository.save(new Member("member3",20));
+        memberJpaRepository.save(new Member("member1",10));
+        memberJpaRepository.save(new Member("member4",21));
+        memberJpaRepository.save(new Member("member5",40));
+
+        //when
+        int resultCount = memberJpaRepository.bulkAgePlus(20);
+
+
+
+        //then
+        assertThat(resultCount).isEqualTo(3);
+
+
+    }
+
+
 }
