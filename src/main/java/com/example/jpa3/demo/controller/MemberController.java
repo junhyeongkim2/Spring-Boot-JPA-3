@@ -1,10 +1,12 @@
 package com.example.jpa3.demo.controller;
 
+import com.example.jpa3.demo.dto.MemberDto;
 import com.example.jpa3.demo.entity.Member;
 import com.example.jpa3.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +30,10 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    public Page<Member> list(Pageable pageable){
+    public Page<MemberDto> list(Pageable pageable){
         Page<Member> page = memberRepository.findAll(pageable);
-        return page;
+        Page<MemberDto> map = page.map(m-> new MemberDto(m.getId(),m.getUsername(),null));
+        return map;
     }
 
     @PostConstruct
